@@ -1,0 +1,38 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+name: test
+
+env:
+  REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+  REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive  # Fetch the Docsy theme
+        fetch-depth: 0         # Fetch all history for .GitInfo and .Lastmod
+    - name: Install deps
+      run: |
+        sudo apt update
+        sudo apt install -y make curl
+    - uses: docker-practice/actions-setup-docker@master
+      with:
+        docker_channel: stable
+    - name: Login
+      run: make login
+    - name: Build
+      run: |
+        make build-site
+        make build-image
+    - name: Run image
+      run: |
+        make serve-daemon
+        sleep 10 && curl localhost:1313
+        make stop
