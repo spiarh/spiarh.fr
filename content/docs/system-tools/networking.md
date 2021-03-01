@@ -14,3 +14,11 @@ lsof -Pnl +M -i6
 ```bash
 ss -lntup
 ```
+
+
+### move interface to/from namespaces
+
+```bash
+ip link set wg0 netns vpn
+ip netns exec vpn ip link set wg0 netns default
+```
