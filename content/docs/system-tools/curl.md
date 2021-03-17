@@ -16,3 +16,9 @@ curl -v https://spiarh.fr 2>&1 | awk 'BEGIN { cert=0 } /^\* SSL connection/ { ce
 ```bash
 curl -k --resolve fqdn:443:192.168.0.1 https://fqdn
 ```
+
+### redfish ilo
+
+```
+curl -sk -L -u $USER:$HOST https://$IP/redfish/v1/Systems/1
+```
