@@ -28,3 +28,9 @@ Check:
 ```bash
 cat /proc/net/bonding/bond0
 ```
+
+### VLAN Interface
+
+```bash
+ip link add link eth0 name eth0.100 type vlan id 100
+```
