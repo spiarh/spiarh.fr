@@ -20,5 +20,12 @@ curl -k --resolve fqdn:443:192.168.0.1 https://fqdn
 ### redfish ilo
 
 ```
-curl -sk -L -u $USER:$HOST https://$IP/redfish/v1/Systems/1
+curl -sk -L -u $USER:$PASS https://$HOST/redfish/v1/Systems/1
+```
+
+Power off server (takes ~6s):
+
+```
+curl -skL -u $USER:$PASS -X POST -H 'Content-Type: application/json' -d '{"Action": "Reset", "ResetType": "ForceOff"}' https://$HOST/redfish/v1/Systems/1
+curl -skL -u $USER:$PASS https://$HOST/redfish/v1/Systems/1 | jq '.Power'
 ```
