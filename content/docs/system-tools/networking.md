@@ -22,3 +22,9 @@ ss -lntup
 ip link set wg0 netns vpn
 ip netns exec vpn ip link set wg0 netns default
 ```
+
+### test MTU with ping
+
+```bash
+ping -Mdo -c1 -s 8972 192.168.1.2
+```
