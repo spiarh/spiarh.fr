@@ -4,6 +4,13 @@ linkTitle: "git"
 date: 2017-01-05
 ---
 
+### show diff staged
+
+```bash
+git diff --staged
+git diff --cached
+```
+
 ### edit last commit
 
 ```bash
