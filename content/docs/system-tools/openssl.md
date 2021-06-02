@@ -103,3 +103,41 @@ openssl s_client -connect $FQDN:443 </dev/null 2>&1 | sed -ne '/-BEGIN CERTIFICA
 ```bash
 openssl s_client -showcerts -verify 5 -connect $FQDN:443 < /dev/null 2>&1 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p'
 ```
+
+### For a Kubernetes service
+
+1. Create key
+
+```bash
+openssl genrsa -out tls.key 4096
+```
+
+2. Create tls.conf
+
+```ini
+[req]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = openshift-logforwarding-splunk
+DNS.2 = openshift-logforwarding-splunk.paas-logging
+DNS.3 = openshift-logforwarding-splunk.paas-logging.svc
+```
+
+3. Create the CSR
+
+```bash
+openssl req -key tls.key -new -out tls.csr -config conf -subj "/CN=openshift-logforwarding-splunk.paas-logging.svc"
+```
+
+4. Create the CRT
+
+```bash
+openssl req -x509 -nodes -config conf -key tls.key -sha256 -days 3650 -in tls.csr -out tls.crt -extensions v3_req -sha256
+```
