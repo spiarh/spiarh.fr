@@ -28,8 +28,10 @@ git reset --soft HEAD~1
 Find commits that introduce or remove lines containing a given regexp.
 
 ```bash
-git log -p --color-words -G "MAX_REGISTERED_USERS"
+git log -p -G "MAX_REGISTERED_USERS"
 ```
+
+To just see the change, add `--color-words`.
 
 To show all the changes in that changeset, use `--pickaxe-all`
 
