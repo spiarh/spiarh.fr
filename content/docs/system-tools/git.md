@@ -23,6 +23,20 @@ git commit --amend
 git reset --soft HEAD~1
 ```
 
+### grep in commits
+
+Find commits that introduce or remove lines containing a given regexp.
+
+```bash
+git log -p --color-words -G "MAX_REGISTERED_USERS"
+```
+
+To show all the changes in that changeset, use `--pickaxe-all`
+
+To look for differences that change the number of occurrences
+of the specified string (i.e. addition/deletion),
+use `-S` instead of `-G`.
+
 ### add upstream repo
 
 ```bash
@@ -102,3 +116,5 @@ git clone --bare https://git/repo/dotfiles.git $HOME/.dotfiles
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 dotfiles checkout
 ```
+
+
