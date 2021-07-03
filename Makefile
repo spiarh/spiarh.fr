@@ -1,25 +1,25 @@
 RUNTIME           := $(shell which docker 2>/dev/null || which podman)
 REPO_ROOT         := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 DATE              := $(shell date +'%Y%m%d')
-GIT_REV           := $(shell git rev-parse HEAD | head -c 12)
+GIT_REV           := $(shell git rev-parse HEAD | cut -c1-8)
 EFFECTIVE_VERSION := $(DATE)-$(GIT_REV)
 
 REGISTRY          ?= r.spiarh.fr
-DOCSY_IMAGE       := $(REGISTRY)/docsy:latest
-FROM_IMAGE        := $(REGISTRY)/nginx:1.18.0-r1
-IMAGE             := $(REGISTRY)/hugo-spiarh:$(EFFECTIVE_VERSION)
+DOCSY_IMAGE       := $(REGISTRY)/library/docsy:latest
+FROM_IMAGE        := $(REGISTRY)/library/nginx:1.20.1-r3
+IMAGE             := $(REGISTRY)/hugo/spiarh:$(EFFECTIVE_VERSION)
 
 .PHONY: build-site
 build-site:
-	@$(RUNTIME) run --rm -v $(REPO_ROOT):/app $(DOCSY_IMAGE) -v
+	$(RUNTIME) run --rm -v $(REPO_ROOT):/app:z $(DOCSY_IMAGE) -v
 
 .PHONY: serve
 serve:
-	@$(RUNTIME) run -ti --name $(EFFECTIVE_VERSION) --rm -p 1313:1313 -v $(REPO_ROOT):$(REPO_ROOT) --workdir $(REPO_ROOT) $(DOCSY_IMAGE) serve --watch --bind 0.0.0.0
+	$(RUNTIME) run -ti --name $(EFFECTIVE_VERSION) --rm -p 1313:1313 -v $(REPO_ROOT):$(REPO_ROOT):z --workdir $(REPO_ROOT) $(DOCSY_IMAGE) serve --watch --bind 0.0.0.0
 
 .PHONY: serve-daemon
 serve-daemon:
-	@$(RUNTIME) run --name $(EFFECTIVE_VERSION) -d -p 1313:1313 -v $(REPO_ROOT):$(REPO_ROOT) --workdir $(REPO_ROOT) $(DOCSY_IMAGE) serve --watch --bind 0.0.0.0
+	$(RUNTIME) run --name $(EFFECTIVE_VERSION) -d -p 1313:1313 -v $(REPO_ROOT):$(REPO_ROOT):z --workdir $(REPO_ROOT) $(DOCSY_IMAGE) serve --watch --bind 0.0.0.0
 
 .PHONY: stop
 stop:
@@ -41,3 +41,6 @@ push-image:
 .PHONY: run-image
 run-image:
 	@$(RUNTIME) run -ti --rm -p 8080:8080 $(IMAGE)
+
+.PHONY: build-push-image
+build-push-image: build-image push-image
