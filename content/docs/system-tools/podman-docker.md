@@ -13,6 +13,19 @@ podman run -ti --rm \
     r.spiarh.fr/alpine
 ```
 
+### Run without isolation
+
+```bash
+podman run -ti --rm \
+  --privileged \
+  --userns=keep-id \
+  --group-add keep-groups \
+  --net=host \
+  --cgroups=disabled \
+  --pid=host \
+  --ipc=host
+```
+
 ### Use graphical tool
 
 Before running the container, user inside the container (root)
