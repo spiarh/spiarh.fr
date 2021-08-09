@@ -15,3 +15,11 @@ nmap --script broadcast-dhcp-discover
 ```bash
 nmap -p 443 --script ssl-cert 
 ```
+
+### Scanning
+
+Offline host:
+
+```bash
+nmap -vvv -A --reason --script="+(safe or default) and not broadcast" -p 1-65535 $IP
+```
