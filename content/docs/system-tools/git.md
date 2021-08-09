@@ -119,4 +119,16 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 dotfiles checkout
 ```
 
+### disable TLS verification
 
+change in the global config:
+
+```bash
+git config --global http.sslVerify false
+```
+
+or with env var:
+
+```bash
+GIT_SSL_NO_VERIFY=true git clone
+```
