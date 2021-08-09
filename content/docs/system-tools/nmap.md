@@ -18,8 +18,15 @@ nmap -p 443 --script ssl-cert
 
 ### Scanning
 
+All ports:
+
+```bash
+nmap -p- $HOST
+```
+
+
 Offline host:
 
 ```bash
-nmap -vvv -A --reason --script="+(safe or default) and not broadcast" -p 1-65535 $IP
+nmap -vvv -A --reason --script="+(safe or default) and not broadcast" -p 1-65535 $HOST
 ```
