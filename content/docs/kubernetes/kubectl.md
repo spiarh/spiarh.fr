@@ -13,9 +13,6 @@ kubectl get pods -A --field-selector spec.nodeName=ip-10-30-44-60.ec2.internal
 ### Events
 
 
-kubectl get events --field-selector involvedObject.kind=Node -A
-
-
 Warnings only:
 
 ```bash
