@@ -1,8 +1,10 @@
 ---
-title: "curl"
-linkTitle: "curl"
+title: "curl-wget"
+linkTitle: "curl wget"
 date: 2017-01-05
----
+--- 
+
+## curl
 
 ### Show server certificate
 
@@ -28,4 +30,13 @@ Power off server (takes ~6s):
 ```
 curl -skL -u $USER:$PASS -X POST -H 'Content-Type: application/json' -d '{"Action": "Reset", "ResetType": "ForceOff"}' https://$HOST/redfish/v1/Systems/1
 curl -skL -u $USER:$PASS https://$HOST/redfish/v1/Systems/1 | jq '.Power'
+```
+
+## wget
+
+### HEAD without downloading the page
+
+```bash
+wget -S --spider https://$HOST
+wget -S --spider --no-check-certificate https://$HOST
 ```
