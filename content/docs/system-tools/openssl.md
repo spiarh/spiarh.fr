@@ -141,3 +141,9 @@ openssl req -key tls.key -new -out tls.csr -config conf -subj "/CN=openshift-log
 ```bash
 openssl req -x509 -nodes -config conf -key tls.key -sha256 -days 3650 -in tls.csr -out tls.crt -extensions v3_req -sha256
 ```
+
+### Remove key
+
+```bash
+openssl rsa -in password_protected_tls.key -out tls.key
+```
