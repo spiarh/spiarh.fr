@@ -4,6 +4,13 @@ linkTitle: "selinux"
 date: 2017-01-05
 ---
 
+
+### check transition
+
+```bash
+sepolicy transition -s spc_t -t rpm_script_t
+```
+
 ### generate policy from an event
 
 ```bash
@@ -36,4 +43,10 @@ $ make -f /usr/share/selinux/devel/Makefile yumsecupdater.pp
 -rw-r--r--. 1 root root    23 Dec  6 15:46 yumsecupdater.if
 -rw-r--r--. 1 root root  7043 Dec  6 15:46 yumsecupdater.pp
 -rw-r--r--. 1 root root   190 Dec  6 15:45 yumsecupdater.te
+```
+
+### load module
+
+```
+semodule -i yumsecupdater.pp
 ```
