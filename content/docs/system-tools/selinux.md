@@ -47,6 +47,17 @@ $ make -f /usr/share/selinux/devel/Makefile yumsecupdater.pp
 
 ### load module
 
-```
+```bash
 semodule -i yumsecupdater.pp
 ```
+
+### See what all rules are associated with a policy type
+
+```bash
+sesearch -A -t spc_t
+```
+
+### List all access
+
+```bash
+sesearch --all -s spc_t
