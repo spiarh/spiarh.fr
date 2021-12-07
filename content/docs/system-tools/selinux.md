@@ -61,3 +61,4 @@ sesearch -A -t spc_t
 
 ```bash
 sesearch --all -s spc_t
+```
