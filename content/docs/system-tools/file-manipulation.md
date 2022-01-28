@@ -185,3 +185,9 @@ find ./ -name 'kustomization.yaml'| xargs -r -n1 cat
 ```bash
 find ./ -type f | xargs -r -n1 -i sed -i 's|foo|bar|g' {}
 ```
+
+### count values and sort
+
+```bash
+cat access.log | cut -d " " -f 1 | sort | uniq -c | sort -urn
+```
