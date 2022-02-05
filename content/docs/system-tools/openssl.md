@@ -21,6 +21,8 @@ openssl req -x509 -new -nodes -key ca.key -sha256 -days 1024 -out ca.crt
 
 ### Example CSR configuration for a webhook
 
+openssl.conf
+
 ```ini
 [req]
 req_extensions = v3_req
@@ -41,10 +43,9 @@ DNS.3 = service.namespace.svc
 
 ```bash
 openssl genrsa -out tls.key 4096
-openssl req -key tls.key -new -out tls.csr -config csr.conf -subj "/CN=service.namespace.svc"
-openssl x509 -req -days 1024 -in tls.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out tls.crt
+openssl req -key tls.key -new -out tls.csr -config openssl.conf -subj "/CN=service.namespace.svc"
+openssl x509 -req -days 1024 -in tls.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out tls.crt -extensions v3_req -extfile openssl.conf -sha256
 ```
-
 
 ### Create self-signed certificate
 
@@ -52,7 +53,6 @@ openssl x509 -req -days 1024 -in tls.csr -CA ca.crt -CAkey ca.key -CAcreateseria
 openssl genrsa -out tls.key 4096
 openssl req -x509 -new -nodes -key tls.key -sha256 -days 1024 -out tls.crt
 ```
-
 
 ### Read CSR
 
@@ -65,7 +65,6 @@ openssl req -in csr -noout -text
 ```bash
 openssl x509 -noout -text -in tls.crt
 ```
-
 
 ### Show CSR
 
@@ -112,7 +111,7 @@ openssl s_client -showcerts -verify 5 -connect $FQDN:443 < /dev/null 2>&1 | sed 
 openssl genrsa -out tls.key 4096
 ```
 
-2. Create tls.conf
+2. Create openssl.conf
 
 ```ini
 [req]
@@ -133,13 +132,13 @@ DNS.3 = openshift-logforwarding-splunk.paas-logging.svc
 3. Create the CSR
 
 ```bash
-openssl req -key tls.key -new -out tls.csr -config conf -subj "/CN=openshift-logforwarding-splunk.paas-logging.svc"
+openssl req -key tls.key -new -out tls.csr -config openssl.conf -subj "/CN=openshift-logforwarding-splunk.paas-logging.svc"
 ```
 
 4. Create the CRT
 
 ```bash
-openssl req -x509 -nodes -config conf -key tls.key -sha256 -days 3650 -in tls.csr -out tls.crt -extensions v3_req -sha256
+openssl req -x509 -nodes -config openssl.conf -key tls.key -sha256 -days 3650 -in tls.csr -out tls.crt -extensions v3_req -sha256
 ```
 
 ### Remove key
