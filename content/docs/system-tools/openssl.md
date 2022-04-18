@@ -4,13 +4,17 @@ linkTitle: "openssl"
 date: 2017-01-05
 ---
 
+### Create key with elliptic curve secp384r1
+
+```bash
+openssl ecparam -genkey -name secp384r1 | openssl ec -out tls.key
+```
 
 ### Convert DER to PEM
 
 ```bash
 openssl x509 -inform DER -in ca.crt -out ca.crt.pem -text
 ```
-
 
 ### Create CA
 

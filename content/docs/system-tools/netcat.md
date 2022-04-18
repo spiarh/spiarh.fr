@@ -11,6 +11,21 @@ nc -vz 1.1.1.1 53
 nc -vnz 1.1.1.1 53
 ```
 
+### Interact with pop3 service
+
+```bash
+$ nc -v  10.1.1.7 110
+Ncat: Version 7.91 ( https://nmap.org/ncat )
+Ncat: Connected to 10.1.1.7:110.
++OK example.com Cyrus POP3 v2.3.7-Invoca-RPM-2.3.7-7.el5_6.4 server ready <2488404358.1644174792@example.com>
+USER offsec
++OK Name is a valid mailbox
+PASS offsec
+-ERR [AUTH] Invalid login
+quit
++OK
+```
+
 ### Listen
 
 ```bash

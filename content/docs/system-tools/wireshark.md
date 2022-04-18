@@ -4,11 +4,6 @@ linkTitle: "tcpdump & wireshark"
 date: 2017-01-05
 ---
 
-## tcpdump
-
-
-## wireshark
-
 ### filters
 
 EHLO withing a timeframe:
@@ -21,4 +16,10 @@ Only new connections:
 
 ```
 tcp.flags.syn==1 && tcp.flags.ack==0
+```
+
+Some port:
+
+```
+tcp.port==8080
 ```

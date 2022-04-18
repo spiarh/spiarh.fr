@@ -35,3 +35,23 @@ Offline host:
 ```bash
 nmap -vvv -A --reason --script="+(safe or default) and not broadcast" -p 1-65535 $HOST
 ```
+
+Banner grabbing:
+
+```bash
+nmap -sV -sT -A 10.11.1.220
+```
+
+### Scanning with NSE
+
+SMB discovery:
+
+```bash
+nmap --script=smb-os-discovery 10.11.1.220
+```
+
+DNS Zone tranfer:
+
+```bash
+nmap --script=dns-zone-transfer -p 53 ns2.megacorpone.com
+```
